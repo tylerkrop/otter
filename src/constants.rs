@@ -9,6 +9,7 @@ pub mod app {
             pub const SHORT: &str = "i";
             pub const HELP: &str = "Runs otter in interactive mode";
         }
+        pub const ARGS_UPDATED: &str = "✔ Arguments updated!";
     }
 }
 pub mod subcommands {

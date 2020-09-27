@@ -62,7 +62,7 @@ impl App {
     }
 
     fn handle_app_matches(&mut self, matches: &clap::ArgMatches) {
-        if matches.is_present("interactive") {
+        if matches.is_present(args::interative::NAME) {
             self.settings.interactive = true;
         }
     }
@@ -78,7 +78,7 @@ impl App {
                         self.operation_service
                             .execute(&mut self.settings, subcommand);
                     } else {
-                        println!("flags updated");
+                        println!("{}", args::ARGS_UPDATED);
                     }
                 }
                 Err(e) => println!("{}", e),
