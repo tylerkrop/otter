@@ -107,7 +107,7 @@ impl App {
 
     fn get_input(&self) -> Vec<String> {
         let mut input = String::new();
-        print!("{}> ", app::NAME.green().bold());
+        print!("{} {} ", app::NAME.green().bold(), "$".yellow().bold());
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut input).unwrap();
         let args: Vec<String> = [
