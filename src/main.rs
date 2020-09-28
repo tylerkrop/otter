@@ -1,7 +1,11 @@
 mod constants;
 mod ops;
 use clap;
-use constants::app::{self, args};
+use colored::*;
+use constants::{
+    app::{self, args},
+    symbols,
+};
 use std::env;
 use std::io::{self, Write};
 
@@ -31,6 +35,14 @@ impl App {
                             .long(args::interative::NAME)
                             .short(args::interative::SHORT)
                             .help(args::interative::HELP),
+                    )
+                    .arg(
+                        clap::Arg::with_name(args::color::NAME)
+                            .long(args::color::NAME)
+                            .takes_value(true)
+                            .possible_value(args::color::AUTO)
+                            .possible_value(args::color::ALWAYS)
+                            .possible_value(args::color::NEVER),
                     ),
             ),
             settings: AppSettings { interactive: false },
@@ -65,10 +77,17 @@ impl App {
         if matches.is_present(args::interative::NAME) {
             self.settings.interactive = true;
         }
+        if let Some(value) = matches.value_of(args::color::NAME) {
+            match value {
+                args::color::ALWAYS => control::set_override(true),
+                args::color::NEVER => control::set_override(false),
+                _ => control::unset_override(),
+            }
+        }
     }
 
     fn run_interactive(&mut self) {
-        println!("{}", app::ASCII_NAME);
+        println!("{}", app::ASCII_NAME.red().bold());
         while self.settings.interactive {
             let input = self.get_input();
             match self.app.get_matches_from_safe_borrow(input) {
@@ -78,7 +97,7 @@ impl App {
                         self.operation_service
                             .execute(&mut self.settings, subcommand);
                     } else {
-                        println!("{}", args::ARGS_UPDATED);
+                        println!("{} {}", symbols::CHECK.green().bold(), args::ARGS_UPDATED);
                     }
                 }
                 Err(e) => println!("{}", e),
@@ -88,7 +107,7 @@ impl App {
 
     fn get_input(&self) -> Vec<String> {
         let mut input = String::new();
-        print!("{}> ", app::NAME);
+        print!("{}> ", app::NAME.green().bold());
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut input).unwrap();
         let args: Vec<String> = [

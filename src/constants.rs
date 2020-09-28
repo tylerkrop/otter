@@ -4,12 +4,18 @@ pub mod app {
     pub const VERSION: &str = "0.1.0";
     pub const ASCII_NAME: &str = "         __  __\n  ____  / /_/ /____  _____\n / __ \\/ __/ __/ _ \\/ ___/\n/ /_/ / /_/ /_/  __/ /\n\\____/\\__/\\__/\\___/_/";
     pub mod args {
+        pub mod color {
+            pub const NAME: &str = "color";
+            pub const AUTO: &str = "auto";
+            pub const ALWAYS: &str = "always";
+            pub const NEVER: &str = "never";
+        }
         pub mod interative {
             pub const NAME: &str = "interactive";
             pub const SHORT: &str = "i";
             pub const HELP: &str = "Runs otter in interactive mode";
         }
-        pub const ARGS_UPDATED: &str = "✔ Arguments updated!";
+        pub const ARGS_UPDATED: &str = "Arguments updated!";
     }
 }
 pub mod subcommands {
@@ -31,4 +37,7 @@ pub mod subcommands {
         pub const NAME: &str = "ping";
         pub const ABOUT: &str = "Responds with pong";
     }
+}
+pub mod symbols {
+    pub const CHECK: &str = "✔";
 }
