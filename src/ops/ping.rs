@@ -5,12 +5,6 @@ use clap;
 
 pub struct Ping {}
 
-impl Ping {
-    pub fn new() -> Ping {
-        Ping {}
-    }
-}
-
 impl Operation for Ping {
     fn get_subcommand(&self) -> clap::App<'static, 'static> {
         clap::App::new(NAME).about(ABOUT)

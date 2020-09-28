@@ -5,12 +5,6 @@ use clap;
 
 pub struct Echo {}
 
-impl Echo {
-    pub fn new() -> Echo {
-        Echo {}
-    }
-}
-
 impl Operation for Echo {
     fn get_subcommand(&self) -> clap::App<'static, 'static> {
         clap::App::new(NAME)

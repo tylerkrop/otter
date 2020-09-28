@@ -18,9 +18,9 @@ pub struct App {
 impl App {
     pub fn new() -> App {
         let mut operation_service = ops::OperationService::new();
-        operation_service.register_operation(Box::new(ops::Ping::new()));
-        operation_service.register_operation(Box::new(ops::Exit::new()));
-        operation_service.register_operation(Box::new(ops::Echo::new()));
+        operation_service.register_operation(Box::new(ops::Ping {}));
+        operation_service.register_operation(Box::new(ops::Exit {}));
+        operation_service.register_operation(Box::new(ops::Echo {}));
         App {
             app: operation_service.get_app(
                 clap::App::new(app::NAME)

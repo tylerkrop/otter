@@ -5,12 +5,6 @@ use clap;
 
 pub struct Exit {}
 
-impl Exit {
-    pub fn new() -> Exit {
-        Exit {}
-    }
-}
-
 impl Operation for Exit {
     fn get_subcommand(&self) -> clap::App<'static, 'static> {
         clap::App::new(NAME).about(ABOUT)
