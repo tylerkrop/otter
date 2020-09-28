@@ -9,13 +9,12 @@ pub use ping::Ping;
 use std::collections::HashMap;
 
 pub trait Operation {
-    fn get_name(&self) -> &'static str;
     fn get_subcommand(&self) -> clap::App<'static, 'static>;
     fn execute(&self, app: &mut AppSettings, matches: &clap::ArgMatches);
 }
 
 pub struct OperationService {
-    map: HashMap<&'static str, Box<dyn Operation>>,
+    map: HashMap<String, Box<dyn Operation>>,
 }
 
 impl OperationService {
@@ -26,9 +25,15 @@ impl OperationService {
     }
 
     pub fn register_operation(&mut self, operation: Box<dyn Operation>) {
-        match self.map.insert(operation.get_name(), operation) {
+        match self
+            .map
+            .insert(operation.get_subcommand().get_name().to_owned(), operation)
+        {
             None => (),
-            Some(op) => panic!("Attempt to overwrite operation: {}", op.get_name()),
+            Some(op) => panic!(
+                "Attempt to overwrite operation: {}",
+                op.get_subcommand().get_name(),
+            ),
         }
     }
 
@@ -42,8 +47,8 @@ impl OperationService {
 
     pub fn execute(&self, settings: &mut AppSettings, subcommand: &Box<clap::SubCommand>) {
         self.map
-            .get(subcommand.name.as_str())
-            .unwrap()
+            .get(&subcommand.name)
+            .unwrap() // we can unwrap here because clap consumes invalid commands
             .execute(settings, &subcommand.matches)
     }
 }

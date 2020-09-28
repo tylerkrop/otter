@@ -12,9 +12,6 @@ impl Exit {
 }
 
 impl Operation for Exit {
-    fn get_name(&self) -> &'static str {
-        NAME
-    }
     fn get_subcommand(&self) -> clap::App<'static, 'static> {
         clap::App::new(NAME).about(ABOUT)
     }
