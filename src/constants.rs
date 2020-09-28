@@ -16,7 +16,12 @@ pub mod subcommands {
     pub mod echo {
         pub const NAME: &str = "echo";
         pub const ABOUT: &str = "Echos values back to the console";
-        pub const VALUES: &str = "values";
+        pub mod args {
+            pub mod values {
+                pub const NAME: &str = "values";
+                pub const HELP: &str = "Values to print to console";
+            }
+        }
     }
     pub mod exit {
         pub const ABOUT: &str = "Exits program";
